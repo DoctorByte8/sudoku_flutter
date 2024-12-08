@@ -19,7 +19,7 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
-  int screen = 1;
+  int screen = 0;
   TextEditingController nomeJogador = TextEditingController();
   String? _radio1;
 
