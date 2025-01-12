@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sudoku_dart/sudoku_dart.dart';
+import 'historico.dart';
 
 class SudokuApp extends StatefulWidget {
   final String? userName;
@@ -149,7 +150,12 @@ class SudokuAppState extends State<SudokuApp> {
               ElevatedButton(
                   onPressed: () {
                     Sudoku sudoku = Sudoku(sudokuGrid);
-                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HistoricoApp(),
+                      ),
+                    );
                     sudoku.debug();
                     print(sudoku.solution);
                   },

@@ -91,6 +91,13 @@ class HomeAppState extends State<HomeApp> {
                 onPressed: () {
                   print('Nome do usuário: $userName');
                   print('Dificuldade selecionada: $selectedDifficulty');
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => SudokuApp(
+                        userName: userName,
+                        difficulty: selectedDifficulty,
+                      )
+                    ),
+                  );
                   Navigator.push(
                     context,
                     MaterialPageRoute(
