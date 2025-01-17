@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sudoku_dart/sudoku_dart.dart';
 import 'historico.dart';
+import 'database.dart';
 
 class SudokuApp extends StatefulWidget {
   final String? userName;
@@ -66,6 +67,34 @@ class SudokuAppState extends State<SudokuApp> {
     setState(() {
       sudokuGrid[row * 9 + col] = int.tryParse(value) ?? -1;
     });
+  }
+
+  /*
+    Parte do App2 - banco de dados no Sudoku
+  */
+  void addRecordExample() async {
+    int diff = 0;
+    switch (widget.difficulty!) {
+      case 'fácil':
+        diff = 1;
+        break;
+      case 'médio': 
+        diff = 2;
+        break;
+      case 'difícil': 
+        diff = 3;
+        break;
+      case 'expert': 
+        diff = 4;
+        break;
+    }
+    int id = await SudokuDB().insertSudoku(
+      widget.userName!, 
+      1, 
+      DateTime.now().toIso8601String(), 
+      diff,
+    );
+    print('Registro inserido com ID: $id');
   }
 
   @override

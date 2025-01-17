@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sqflite/sqflite.dart';
+import 'database.dart';
 
 
 class HistoricoApp extends StatefulWidget {
@@ -21,7 +22,7 @@ class HistoricoAppState extends State<HistoricoApp> {
         'won': true,
       },
       {
-        'userName': 'Ana',
+        'userName': 'Larissa',
         'difficulty': 'médio',
         'date': '2024-12-19',
         'won': false,
@@ -84,7 +85,7 @@ class HistoricoAppState extends State<HistoricoApp> {
               ),
               ElevatedButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.popUntil(context, ModalRoute.withName('/'));
                   },
                   child: Text('Voltar para home'),
               ),
