@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'sudoku.dart';
 
 class HomeApp extends StatefulWidget {
@@ -8,7 +7,6 @@ class HomeApp extends StatefulWidget {
 }
 
 class HomeAppState extends State<HomeApp> {
-
   String? userName;
   String selectedDifficulty = 'fácil';
 
@@ -23,7 +21,7 @@ class HomeAppState extends State<HomeApp> {
       body: Padding(
         padding: const EdgeInsets.all(30.0),
         child: Center(
-          child: Column (
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -34,11 +32,12 @@ class HomeAppState extends State<HomeApp> {
                 ),
                 onChanged: (value) {
                   setState(() {
-                    userName = value;
+                    userName = value.trim().isEmpty ? null : value;
                   });
                 },
               ),
-              Text('Escolha a dificuldade:',
+              Text(
+                'Escolha a dificuldade:',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               Expanded(
@@ -87,32 +86,27 @@ class HomeAppState extends State<HomeApp> {
                   ],
                 ),
               ),
-            ElevatedButton(
-                onPressed: () {
-                  print('Nome do usuário: $userName');
-                  print('Dificuldade selecionada: $selectedDifficulty');
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => SudokuApp(
-                        userName: userName,
-                        difficulty: selectedDifficulty,
-                      )
-                    ),
-                  );
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SudokuApp(
-                        userName: userName,
-                        difficulty: selectedDifficulty,
-                      ),
-                    ),
-                  );
-                },
+              ElevatedButton(
+                onPressed: userName == null
+                    ? null
+                    : () {
+                        print('Nome do usuário: $userName');
+                        print('Dificuldade selecionada: $selectedDifficulty');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SudokuApp(
+                              userName: userName,
+                              difficulty: selectedDifficulty,
+                            ),
+                          ),
+                        );
+                      },
                 child: Text('Novo jogo'),
-            ),
+              ),
             ],
           ),
-        ), 
+        ),
       ),
     );
   }

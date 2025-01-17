@@ -61,4 +61,25 @@ class SudokuDB {
     );
     return results.isNotEmpty ? results.first : null;
   }
+
+  Future<List<Map<String, dynamic>>> getHistoryByUserAndDifficulty(
+    String userName,
+    String? difficulty,
+  ) async {
+    final db = await database;
+
+    String whereClause = 'name = ?';
+    List<String> whereArgs = [userName];
+
+    if (difficulty != null) {
+      whereClause += ' AND level = ?';
+      whereArgs.add(difficulty);
+    }
+
+    return await db.query(
+      'sudoku',
+      where: whereClause,
+      whereArgs: whereArgs,
+    );
+  }
 }

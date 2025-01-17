@@ -16,6 +16,7 @@ class SudokuApp extends StatefulWidget {
 class SudokuAppState extends State<SudokuApp> {
   int? selectedRow;
   int? selectedCol;
+  int win = 0;
 
   /*
     late Sudoku sudokuGrid;
@@ -72,7 +73,7 @@ class SudokuAppState extends State<SudokuApp> {
   /*
     Parte do App2 - banco de dados no Sudoku
   */
-  void addRecordExample() async {
+  void addRecordExample(win) async {
     int diff = 0;
     switch (widget.difficulty!) {
       case 'fácil':
@@ -90,7 +91,7 @@ class SudokuAppState extends State<SudokuApp> {
     }
     int id = await SudokuDB().insertSudoku(
       widget.userName!, 
-      1, 
+      win, 
       DateTime.now().toIso8601String(), 
       diff,
     );
@@ -179,14 +180,20 @@ class SudokuAppState extends State<SudokuApp> {
               ElevatedButton(
                   onPressed: () {
                     Sudoku sudoku = Sudoku(sudokuGrid);
+                    sudoku.debug();
+                    print(sudoku.solution);
+                    if (sudoku.solution == sudokuGrid){
+                      win = 1;
+                    }
+                    addRecordExample(win);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => HistoricoApp(),
+                        builder: (context) => HistoricoApp(
+                          userName: widget.userName,
+                        ),
                       ),
                     );
-                    sudoku.debug();
-                    print(sudoku.solution);
                   },
                   child: Text('Finalizar jogo'),
               ),
